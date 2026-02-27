@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email</title>
+</head>
+
+<body>
+    <h1>Send Email</h1>
+
+    <input type="text" id="to" placeholder="Recipent Email" />
+    <br><br>
+    <input type="text" id="subject" placeholder="Subject">
+    <br><br>
+    <textarea name="message" id="message" placeholder="Message"></textarea>
+    <br><br>
+
+    <button onclick="sendEmail()">Send</button>
+
+    <script>
+        async function sendEmail() {
+            const response = await fetch("http://localhost:3000/sendmail", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    to: document.getElementById("to").value,
+                    subject: document.getElementById("subject").value,
+                    message: document.getElementById("message").value
+                })
+            });
+
+            const data = await response.json();
+            alert(data.message || data.error);
+
+        }
+    </script>
+</body>
+
+</html>
